@@ -3,7 +3,9 @@ import os
 from datetime import datetime
 from functools import wraps
 
-cache_dir = '/mnt/base-us/extensions/dashboard/cache/' if os.name != 'nt' else '../cache'
+cache_dir = os.path.join(os.environ["PYTHONPATH"], "dashboard", "cache")
+
+os.makedirs(cache_dir, exist_ok=True)
 
 
 def hours_since_last_modification(file_path):

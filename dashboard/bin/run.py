@@ -14,9 +14,9 @@ tvmaze_ids = [
     79,  # The Goldbergs
     38963,  # The Mandalorian
     17128,  # This Is Us
-              ]
+]
 
-svg_path = '/mnt/base-us/extensions/dashboard/svg/' if os.name != 'nt' else '../svg'
+svg_path = os.path.join(os.environ["PYTHONPATH"], "dashboard", "svg")
 
 
 def create_svg(svg_data, svg_template, svg_output):
@@ -48,15 +48,15 @@ if __name__ == "__main__":
     # Combine into dict
     svg_data = {
         "GS_HINDEX": gs_data.get("h_index"),
-                "GS_CITATIONS": gs_data.get("citations"),
+        "GS_CITATIONS": gs_data.get("citations"),
         "GWENT_LADDER_RANK": gwent_data.get("ladder")
         + (
             " (Rank " + gwent_data.get("rank") + ")"
             if "Pro" not in gwent_data.get("ladder")
             else ""
         ),
-                "GWENT_MMR": gwent_data.get("mmr"),
-                "GWENT_POSITION": gwent_data.get("position"),
+        "GWENT_MMR": gwent_data.get("mmr"),
+        "GWENT_POSITION": gwent_data.get("position"),
         "LASTUPDATE": "Last Update: " + datetime.now().strftime("%d/%m/%Y - %H:%M:%S"),
     }
 
