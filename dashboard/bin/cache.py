@@ -7,7 +7,7 @@ cache_dir = '/mnt/base-us/extensions/dashboard/cache/' if os.name != 'nt' else '
 
 
 def hours_since_last_modification(file_path):
-    """"
+    """ "
     Returns the number of hours since a file was modified. -1 indicates the file doesn't exists
     """
     if os.path.exists(file_path):
@@ -34,16 +34,16 @@ def cache(cache_file, cache_time):
         def f_cache(*args, **kwargs):
             hslm = hours_since_last_modification(cache_file)
             if 0 <= hslm < cache_time:
-                with open(cache_file, 'r') as fin:
+                with open(cache_file, "r") as fin:
                     output = json.load(fin)
                 return output
 
             try:
                 output = f(*args, **kwargs)
-                with open(cache_file, 'w') as fout:
+                with open(cache_file, "w") as fout:
                     json.dump(output, fout)
             except:
-                with open(cache_file, 'r') as fin:
+                with open(cache_file, "r") as fin:
                     output = json.load(fin)
             return output
 
