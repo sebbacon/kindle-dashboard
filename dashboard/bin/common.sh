@@ -1,7 +1,8 @@
 #!/bin/bash
 
+#set -eo pipefail
 
-export PYTHONPATH=$(realpath $(dirname $0)../../..)
+export PYTHONPATH=$(realpath $(dirname $0)/../..)
 #cd "/mnt/base-us/extensions/dashboard/"
 cd $PYTHONPATH/dashboard
 
