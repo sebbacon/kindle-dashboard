@@ -48,11 +48,10 @@ def get_events():
     service = get_service()
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
-    then = (
-        datetime.datetime.utcnow() + datetime.timedelta(days=7)
-    ).isoformat() + "Z"  # 'Z' indicates UTC time
-    print("Getting the upcoming 10 events")
-    calendar_id = "family09636652538022017705@group.calendar.google.com"
+    then = (datetime.datetime.utcnow() + datetime.timedelta(days=7)).isoformat() + "Z"
+    dirname = os.path.dirname(__file__)
+    with open(os.path.join(dirname, "calendar.txt"), "r") as f:
+        calendar_id = f.read().strip()
     # https://developers.google.com/calendar/api/v3/reference/calendars
     events_result = (
         service.events()
@@ -60,7 +59,7 @@ def get_events():
             calendarId=calendar_id,
             timeMin=now,
             timeMax=then,
-            maxResults=100,
+            maxResults=20,
             singleEvents=True,
             orderBy="startTime",
         )
