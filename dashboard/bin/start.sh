@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -eo pipefail
+
 # Make sure there is enough time to reconnect to the wifi
 sleep 30
 
