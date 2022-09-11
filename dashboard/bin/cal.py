@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import datetime
 import os.path
+from zoneinfo import ZoneInfo
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -27,7 +28,22 @@ def list_calendars():
 
 def to_datetime(event_time):
     s = event_time.get("dateTime", event_time.get("date"))
-    return datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+    if "timeZone" in event_time:
+        timezone = event_time["timeZone"]
+        dt = (
+            datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+            .replace(tzinfo=datetime.timezone.utc)
+            .astimezone(tz=ZoneInfo(timezone))
+        )
+    else:
+        timezone = "UTC"
+        dt = (
+            datetime.datetime.strptime(s, "%Y-%m-%d")
+            .replace(tzinfo=datetime.timezone.utc)
+            .astimezone(tz=ZoneInfo(timezone))
+        )
+
+    return dt
 
 
 def get_events():
@@ -59,12 +75,12 @@ def get_events():
         return
 
     # Prints the start and name of the next 10 events
-    today = datetime.datetime.today()
+    today = datetime.datetime.today().astimezone()
     result = []
     for event in events:
 
         start = to_datetime(event["start"])
-        days_to_event = (start - today).days
+        days_to_event = (start.date() - today.date()).days
         end = to_datetime(event["end"])
         if days_to_event == 0:
             date_part = "Today"
@@ -72,10 +88,14 @@ def get_events():
             date_part = "Tomorrow"
         else:
             date_part = start.strftime("%a %-d %b")
+        if start.time() == end.time():
+            time_part = ""
+        else:
+            time_part = f"{start.strftime('%H:%M')}-{end.strftime('%H:%M')}"
         result.append(
             (
                 date_part,
-                f"{start.strftime('%H:%M')}-{end.strftime('%H:%M')}",
+                time_part,
                 event["summary"],
             )
         )

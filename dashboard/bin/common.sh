@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #set -eo pipefail
-
+TZ='Europe/London'; export TZ
 export PYTHONPATH=$(realpath $(dirname $0)/../..)
 #cd "/mnt/base-us/extensions/dashboard/"
 cd $PYTHONPATH/dashboard

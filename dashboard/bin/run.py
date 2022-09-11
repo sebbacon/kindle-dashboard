@@ -1,7 +1,7 @@
 # bin/python3
 # encoding: utf-8
 
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 from os.path import join
 from extract import get_google_scholar, get_gwent_data, get_tvmaze_data
@@ -25,7 +25,6 @@ def create_svg(svg_data, svg_template, svg_output):
     with open(svg_template, "r") as fin:
 
         template = fin.read()
-
         for k, v in svg_data.items():
             template = template.replace(k, v)
 
@@ -34,7 +33,7 @@ def create_svg(svg_data, svg_template, svg_output):
 
 
 def fmt_date(date_input):
-    d = datetime.strptime(date_input, "%Y-%m-%d")
+    d = datetime.strptime(date_input, "%Y-%m-%d").astimezone()
     return d.strftime("%d/%m/%Y")
 
 
@@ -85,8 +84,11 @@ def render_calendar():
     # Get Data
     events = get_events()
     max_events = 8  # the number of slots in the template
+    utc_dt = datetime.now(timezone.utc)
+
     svg_data = {
-        "LASTUPDATE": "Last Update: " + datetime.now().strftime("%d/%m/%Y - %H:%M:%S"),
+        "LASTUPDATE": "Last Update: "
+        + utc_dt.astimezone().strftime("%d/%m/%Y - %H:%M:%S"),
     }
 
     for i in range(max_events):
