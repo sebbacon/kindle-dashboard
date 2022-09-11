@@ -37,10 +37,8 @@ def to_datetime(event_time):
         )
     else:
         timezone = "UTC"
-        dt = (
-            datetime.datetime.strptime(s, "%Y-%m-%d")
-            .replace(tzinfo=datetime.timezone.utc)
-            .astimezone(tz=ZoneInfo(timezone))
+        dt = datetime.datetime.strptime(s, "%Y-%m-%d").replace(
+            tzinfo=datetime.timezone.utc
         )
 
     return dt
