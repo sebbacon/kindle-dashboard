@@ -97,11 +97,16 @@ def render_calendar():
             svg_data["EVENT_%d_TIME" % (i + 1)] = events[i][1]
             svg_data["EVENT_%d_DESCRIPTION" % (i + 1)] = events[i][2]
             if events[i][0] == "Today":
-                svg_data["#666666"] = "#222222"
+                svg_data["EVENT_%d_BG" % (i + 1)] = "#ffffff"
+            elif events[i][0] == "Tomorrow":
+                svg_data["EVENT_%d_BG" % (i + 1)] = "#e6e6e6"
+            else:
+                svg_data["EVENT_%d_BG" % (i + 1)] = "#afafaf"
         else:
             svg_data["EVENT_%d_DATE" % (i + 1)] = ""
             svg_data["EVENT_%d_TIME" % (i + 1)] = ""
             svg_data["EVENT_%d_DESCRIPTION" % (i + 1)] = "No more events found"
+            svg_data["EVENT_%d_BG" % (i + 1)] = "#ffffff"
 
     # Load Data into SVG
     create_svg(svg_data, join(svg_path, "template.svg"), join(svg_path, "tmp.svg"))
