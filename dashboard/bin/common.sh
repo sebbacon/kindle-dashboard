@@ -7,7 +7,6 @@ export PYTHONPATH=$(realpath $(dirname $0)/../..)
 #cd "/mnt/base-us/extensions/dashboard/"
 cd $PYTHONPATH/dashboard
 
-
 # Remove files
 if [ -f ./svg/tmp.svg ]; then
     rm ./svg/tmp.svg
@@ -17,7 +16,6 @@ if [ -f ./svg/tmp.png ]; then
     rm ./svg/tmp.png
 fi
 
-
 # Copy rsvg-convert to a share where it can be started
 # The shared folder that can be accessed via USB is mounted with the noexec flag,
 # copying file to /var/tmpt gets around this restriction.
@@ -25,8 +23,7 @@ if [ ! -f /var/tmp/rsvg-convert ]; then
     cp -rf ./external/* /var/tmp
 fi
 
-python3 ./bin/run.py
-
+python3 ./bin/run.py 1>&2
 
 # Check if svg exists and convert it
 if [ -e ./svg/tmp.svg ]; then
