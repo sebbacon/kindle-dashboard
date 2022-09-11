@@ -1,19 +1,20 @@
 {
     "items": [
-    {
-        "name": "Dashboard 4DCu.be",
-        "priority": -999,
-        "exitmenu": false,
-        "refresh": false,
-        "status": false,
-        "action": "./bin/start.sh"
-    }, {
-        "name": "Dashboard 4DCu.be (Debug)",
-        "priority": -998,
-        "exitmenu": false,
-		"refresh": false,
-		"status": false,
-        "action": "./bin/start_once.sh"
-    }
+        {
+            "name": "Calendar",
+            "priority": -999,
+            "exitmenu": false,
+            "refresh": false,
+            "status": false,
+            "action": "sh ./bin/start.sh"
+        },
+        {
+            "name": "Calendar (Debug)",
+            "priority": -998,
+            "exitmenu": false,
+            "refresh": false,
+            "status": false,
+            "action": "sh ./bin/start_once.sh"
+        }
     ]
 }
