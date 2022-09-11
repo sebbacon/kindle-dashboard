@@ -1,3 +1,6 @@
 .idea
 dashboard/svg/tmp.svg
 dashboard/cache/*
+credentials.json
+token.json
+calendar.txt
