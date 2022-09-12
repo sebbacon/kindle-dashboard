@@ -2,6 +2,7 @@
 
 set -eo pipefail
 
+echo "Starting at $(date)"
 # Make sure there is enough time to reconnect to the wifi
 sleep 30
 

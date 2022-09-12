@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import os
 from os.path import join
 from cal import get_events
+from dashboard.bin.cache import cache_dir, cache
 
 
 svg_path = os.path.join(os.environ["PYTHONPATH"], "dashboard", "svg")
@@ -31,6 +32,7 @@ def is_today(date_input, fmt="%Y-%m-%d"):
     return date_input == datetime.now().strftime(fmt)
 
 
+@cache(join(cache_dir, "cal_cache.json"), 8)
 def render_calendar():
     # Get Data
     events = get_events()
