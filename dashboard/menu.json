@@ -1,15 +1,23 @@
 {
     "items": [
         {
-            "name": "Calendar",
+            "name": "Calendar (start)",
             "priority": -999,
             "exitmenu": false,
             "refresh": false,
             "status": false,
-            "action": "sh ./bin/start.sh"
+            "action": "sh -c 'echo > /var/run/calendar_flag'"
         },
         {
-            "name": "Calendar (Debug)",
+            "name": "Calendar (stop)",
+            "priority": -999,
+            "exitmenu": false,
+            "refresh": false,
+            "status": false,
+            "action": "sh -c 'rm -f /var/run/calendar_flag'"
+        },
+        {
+            "name": "Calendar (debug)",
             "priority": -998,
             "exitmenu": false,
             "refresh": false,
