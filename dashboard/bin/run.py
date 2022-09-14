@@ -32,8 +32,8 @@ def is_today(date_input, fmt="%Y-%m-%d"):
     return date_input == datetime.now().strftime(fmt)
 
 
-@cache(join(cache_dir, "cal_cache.json"), 8)
-def render_calendar():
+@cache(join(cache_dir, "cal_cache.json"), 0)
+def get_data():
     # Get Data
     events = get_events()
     max_events = 8  # the number of slots in the template
@@ -60,8 +60,12 @@ def render_calendar():
             svg_data["EVENT_%d_TIME" % (i + 1)] = ""
             svg_data["EVENT_%d_DESCRIPTION" % (i + 1)] = "No more events found"
             svg_data["EVENT_%d_BG" % (i + 1)] = "#ffffff"
+    return svg_data
 
+
+def render_calendar():
     # Load Data into SVG
+    svg_data = get_data()
     create_svg(svg_data, join(svg_path, "template.svg"), join(svg_path, "tmp.svg"))
 
 
