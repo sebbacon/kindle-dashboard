@@ -41,7 +41,9 @@ Set up a local dev environment on your computer, by installing python3 and pip i
 
 Create a file at `bin/calendar.txt` whose contents are the calendar id you wish to query.  Something like `family04215672838001015700@group.calendar.google.com` (get it from your calendar's "Sharing" settings).
 
-Run the script at `bin/cal.py`, something like `cd bin/; PYTHONPATH=../../ python cal.py`. This should run the oauth flow to create `token.json` and `credentials.json`, that authorise your script's access. If it succeeds, you'll see some JSON of your upcoming events.
+Generate OAuth credentials: create a new Project in [Google Cloud Console](https://console.cloud.google.com/); go to APIs and Services and enable the Calendar API; then visit the Credentials section and generate a new OAuth 2.0 Client ID of type "Desktop". Save the resulting `credentials.json` to `dashboard/bin/credentials.json`. In the OAuth Consent Screen section, publish the project. It will ask you to go through verification, but you can ignore that, as the project is only for you, and you'll just skip the OAuth warning screen at login, because you trust yourself.
+
+Run the script at `bin/cal.py`, something like `cd bin/; PYTHONPATH=../../ python cal.py`. This should run the oauth flow to create `token.json`, that authorise your script's access. If it succeeds, you'll see some JSON of your upcoming events. 
 
 Now copy all three files (`calendar.txt`, `token.json`, and `credentials.json` to the `dashboard/bin/` directory on your Kindle). Test by running the same `cal.py` script from the command line on your Kindle.
 
