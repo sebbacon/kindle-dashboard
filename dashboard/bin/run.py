@@ -3,10 +3,10 @@
 
 from datetime import datetime, timezone
 import os
+import traceback
 from os.path import join
 from cal import get_events
-from dashboard.bin.cache import cache_dir, cache
-
+from google.auth.exceptions import TransportError
 
 svg_path = os.path.join(os.environ["PYTHONPATH"], "dashboard", "svg")
 
@@ -32,7 +32,6 @@ def is_today(date_input, fmt="%Y-%m-%d"):
     return date_input == datetime.now().strftime(fmt)
 
 
-@cache(join(cache_dir, "cal_cache.json"), 0)
 def get_data():
     # Get Data
     events = get_events()
@@ -65,8 +64,11 @@ def get_data():
 
 def render_calendar():
     # Load Data into SVG
-    svg_data = get_data()
-    create_svg(svg_data, join(svg_path, "template.svg"), join(svg_path, "tmp.svg"))
+    try:
+        svg_data = get_data()
+        create_svg(svg_data, join(svg_path, "template.svg"), join(svg_path, "tmp.svg"))
+    except TransportError:
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
