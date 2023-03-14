@@ -18,17 +18,24 @@ while true; do
     # Make sure there is enough time to reconnect to the wifi
     sleep 30
     if [[ -f "/var/run/calendar_flag" ]]; then
+
         echo "$(date): Refreshing calendar"
         source "$(dirname $0)/common.sh"
 
         # Make sure the screen is fully refreshed before going to sleep
         sleep 5
-
         echo "" > /sys/class/rtc/rtc1/wakealarm
         # Following line contains sleep time in seconds
         echo "+3600" > /sys/class/rtc/rtc1/wakealarm
         # Following line will put device into deep sleep until the alarm above is triggered
         echo mem > /sys/power/state
+        # Give the user time to override calendar_flag
+        sleep 30
+        if [[ -f "/var/run/calendar_flag" ]]; then
+            # Reboot! Because wifi does not reliably restart on awakening
+            # /sbin/reboot
+            restart wifid
+        fi
     else
         echo "$(date): Calendar is off"
     fi
